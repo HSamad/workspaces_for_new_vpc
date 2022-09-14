@@ -1,0 +1,2 @@
+new-item -path c:\dir1 -itemtype directory
+New-Partition -DiskNumber 1 -UseMaximumSize -DriveLetter D | Format-Volume

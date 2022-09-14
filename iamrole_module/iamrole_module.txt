@@ -1,0 +1,289 @@
+
+
+
+resource "aws_iam_instance_profile" "devops-ci-ec2-profile" {
+  name = "devops-ci-ec2-profile"
+  role = aws_iam_role.devops-ci-ec2-role.name
+}
+
+
+output "iam_profile" {
+
+  value = aws_iam_instance_profile.devops-ci-ec2-profile.id
+}
+
+
+resource "aws_iam_role" "devops-ci-ec2-role" {
+  name = "devops-ci-ec2-role"
+  #   assume_role_policy = "${file("ec2_assume_policy.json")}"  
+  # assume_role_policy  = data.aws_iam_policy_document.instance_assume_role_policy.json # (not shown)
+  assume_role_policy = file("assets/ec2_assume_policy.json")
+  managed_policy_arns = [
+    aws_iam_policy.policy-ec2.arn,
+    aws_iam_policy.policy-s3.arn,
+    aws_iam_policy.policy-ssm.arn,
+    aws_iam_policy.policy-ec2messages.arn,
+    aws_iam_policy.policy-ssmmessages.arn,
+    aws_iam_policy.policy-clouddirectory.arn,
+    aws_iam_policy.policy-logs.arn,
+    aws_iam_policy.policy-identitystore.arn,
+    aws_iam_policy.policy-rolesanywhere.arn,
+    aws_iam_policy.policy-events.arn
+    ]
+}
+
+
+
+
+
+
+
+ 
+
+resource "aws_iam_policy" "policy-ec2" {
+  name = "policy-ec2"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["ec2:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "policy-s3" {
+  name = "policy-s3"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["s3:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+resource "aws_iam_policy" "policy-ssm" {
+  name = "policy-ssm"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["ssm:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "policy-ec2messages" {
+  name = "policy-ec2messages"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["ec2messages:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "policy-ssmmessages" {
+  name = "policy-ssmmessages"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["ssmmessages:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "policy-clouddirectory" {
+  name = "policy-clouddirectory"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["clouddirectory:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "policy-logs" {
+  name = "policy-logs"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["logs:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# identitystore 
+resource "aws_iam_policy" "policy-identitystore" {
+  name = "policy-identitystore"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["identitystore:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# rolesanywhere
+resource "aws_iam_policy" "policy-rolesanywhere" {
+  name = "policy-rolesanywhere"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["rolesanywhere:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# events
+resource "aws_iam_policy" "policy-events" {
+  name = "policy-events"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["events:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# evidently
+resource "aws_iam_policy" "policy-evidently" {
+  name = "policy-evidently"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["evidently:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# evidently-dataplane
+resource "aws_iam_policy" "policy-evidently-dataplane" {
+  name = "policy-evidently-dataplane"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["evidently-dataplane:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# monitoring
+resource "aws_iam_policy" "policy-monitoring" {
+  name = "policy-monitoring"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["monitoring:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# rum
+resource "aws_iam_policy" "policy-rum" {
+  name = "policy-rum"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["rum:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# rum-dataplane
+resource "aws_iam_policy" "policy-rum-dataplane" {
+  name = "policy-rum-dataplane"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["rum-dataplane:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+# synthetics
+resource "aws_iam_policy" "policy-synthetics" {
+  name = "policy-synthetics"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["synthetics:*"]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
