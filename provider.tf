@@ -1,6 +1,6 @@
 provider "aws" {
   region  = "us-west-2"
-  profile = "HSamad"
+  profile = "samad@devops.com"
 }
 
 # this project designed for a given default vpc of certain region, with its default subnets and availability zones.

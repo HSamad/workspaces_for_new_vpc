@@ -88,9 +88,9 @@ locals {
   instancetype = lookup(local.instancetype_env, local.env)
 
   keypairname_env = {
-    default    = "aws_devops_kp_staging"
+    default    = "key_pair_us_west_2"
     staging    = "aws_devops_kp_staging"
-    production = "key_pair_us_west_2"
+    production = "aws_devops_kp_production"
   }
 
   keypairname = lookup(local.keypairname_env, local.env)
